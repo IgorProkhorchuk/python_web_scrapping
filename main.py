@@ -7,26 +7,17 @@ from urllib.parse import urljoin
 headers = {
   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; rv:91.0) Gecko/20100101 Firefox/91.0'
 }
+# define a base URL
 
-URL = "https://fayni-recepty.com.ua/recepty/pershi-stravy/"
+URL = "https://www.work.ua/jobs/?page=1"
 
 print(URL)
-while True:
-  site_page = requests.get(URL, headers=headers)
-  soup = BeautifulSoup(site_page.content, "html.parser")
+#while True:
+site_page = requests.get(URL, headers=headers)
+print(site_page.status_code)
 
-  first_dishes = soup.find_all("h2", class_="entry-title")
-  for dish in first_dishes:
-    dish_name = dish.a.text
-    print(dish_name)
+soup = BeautifulSoup(site_page.content, "html.parser")
 
-  next_page = soup.select_one('a.next')
-
-  if next_page:
-    next_url = next_page.get('href')
-    URL = urljoin(URL, next_url)
-  else:
-    break
-
-
-
+jobs = soup.find_all('div', class_ = 'card card-hover card-visited wordwrap job-link js-hot-block')
+for job in jobs:
+    
