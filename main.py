@@ -19,5 +19,12 @@ print(site_page.status_code)
 soup = BeautifulSoup(site_page.content, "html.parser")
 
 jobs = soup.find_all('div', class_ = 'card card-hover card-visited wordwrap job-link js-hot-block')
-for job in jobs:
-    
+file = open("output.txt", "w")
+
+output_str = ""
+for row in jobs:
+    output_str += str(row) + "\n"
+
+file = open("output.html", "w")
+file.write(output_str)
+file.close()
